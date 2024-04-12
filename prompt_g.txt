@@ -1,0 +1,96 @@
+Definition: A multiword expression is a string of multiple words which act as a single semantic or syntactic element. A multiword expression can be a sequence of two or more nouns that form a single noun (noun-noun compound), a verb followed by a particle which function syntactically as a single verb (verb particle construction), an expression starting with a verb that has little semantic content and followed by another word or phrase that carries the entire expression’s meaning (light verb construction), or a phrase that could have a literal reading but is used in a context where its meaning is non-compositional (idiom). Proper nouns, borrowings, and hyphenated text are not multiword expressions.
+Question: Given the paragraph below, identify a list of possible multiword expressions and for each entry explain why it either is or is not a multiword expression:
+Example 1:
+“ It 's just accepted -- and expected -- now .
+ Q : How are you using technology in           been a big breakthrough because it allows the patient to get involved in their care ; they can really see what 's going on .
+With a magnification of up to 40 times , the camera zooms in close on the teeth , then broadcasts the image on a large screen .
+When we were kids and went to the dentist , we just believed whatever he said .
+Now I can say , ' You have a problem , and here it is . '
+A picture 's worth a thousand words , so I always take a before and after shot .
+It 's not the kind of thing you 'd show at a cocktail party , but I want people to really know what 's going on in the back of their mouths .
+That kind of ties into our philosophy on the first visit .
+We 're getting as much information about the patient as possible and giving them back as much info as we can , too .
+ Q : What are you doing to make the time in the dental chair less nerve-racking           coming out that does n't involve needles . ”
+Answer:
+1. get involved | True | as involved carries more meaning than get (light verb construction)
+2. going on | True | as the verb and particle together mean happening (verb particle construction)
+3. A picture ‘s worth a thousand words | True | as the meaning is not literal (idiom)
+4. take a before and after shot | True | as the meaning comes from the noun shot rather than the verb take (light verb construction)
+5. the kind of thing | False | as its meaning is compositional
+6. cocktail party | True | as two nouns come together to form one noun phrase (noun-noun compound)
+7. going on | True | as the verb and particle together mean happening (verb particle construction)
+8. ties into | True | as the verb and particle together mean connects to (verb particle construction)
+Example 2:
+“ But " The New York Times " says to its readers , " We try to ensure ... "
+COX : Believe us !KURTZ " ...
+We make mistakes . "
+Oh , boy , have they made some mistakes . "
+But we try to ensure everything is accurate .
+" You 're saying , " I 'm just out here having fun . "
+COX :
+No .
+I mean , if I actually run something that 's untrue , I try to -- I mean , I have n't had to do this very often .
+I will go back and say , and post prominently that I got something wrong . ”
+Answer:
+1.	readers | False | as it is a single word
+2.	make mistakes | True | as make has little meaning compared to the following noun (light verb construction)
+3.	made some mistakes | True | as made has little meaning compared to the following noun (light verb construction)
+4.	having fun | True | as having has little meaning compared to the following noun (light verb construction)
+5.	post prominently | False | as the meaning is compositional
+6.	got something wrong | True | as got has little meaning compared to the following adjective (light verb construction)
+Example 3:
+“ I figure that I 'm capable of making an intelligent determination as to when it 's safe to let my child stay in the car and when it is not .
+It 's not even a difficult thought process -- if I believe , based on my VAST years of experience sitting in cars waiting for people , that I could comfortably sit in the car for however long I 'm likely to be gone , she can as well , and if it would be too hot/cold for me , it 's probably too hot/cold for her .
+
+You
+and cw are more than welcome to your opinions about the necessity of endlessly lugging children around           for your own children .
+And I 'm more than welcome to adhere to my opinion for my own .
+As long as you keep out of my business , I have no problem with your choice .
+
+Elissa : No parking in the fire lane is not okay .
+First of all it is against the law . ”
+Answer:
+1.	making an intelligent determination | True | as determination contributes more meaning than making (light verb construction)
+2.	as to | True | as the meaning does not come from the individual words (idiom)
+3.	thought process | True | as two nouns come together to form one noun phrase (noun-noun compound)
+4.	sit in | False | as the meaning is literal
+5.	lugging children around | True | as the verb and particle together mean bring (verb-particle construction)
+6.	keep out | True | as the verb and particle together mean stay away (verb-particle construction)
+7.	fire lane | True | as two nouns come together to form one noun phrase (noun-noun compound)
+Example 4:
+“ I found that a bell weather sign .
+The Columbus " Disgrace " Dispatch endorsed Romney ..
+and it has been leaning leftist since the Cleveland gang took over after publisher John W. Wolfe passed away ...
+ ok listen up , I have just learned that miracles are still likely to happen .
+
+The ACT elections were held today .
+The ACT was where I was living for the past 6 years .
+It was moribund thanks to the ALP/Greens .
+
+I have just been watching the early election returns and there has been a shock ! ! ”
+Answer:
+1.	Cleveland gang | False | as a proper noun can’t be part of a noun-noun compound
+2.	took over | True| as the verb and particle together mean assumed responsibility (verb-particle construction)
+3.	passed away | True | as it is a euphemism (idiom)
+4.	listen up | True | as the verb and particle together mean pay attention (verb-particle construction)
+5.	election returns | True | as two nouns form a single noun phrase (noun-noun compound)
+6.	been watching | False | as the meaning is compositional
+Example 5:
+“ Long ago , in the far away land of ancient Greece ... there was a golden age of powerful gods ... and extraordinay heroes .
+And the greatest and strongest of all these heroes ... was the mighty Hercules .
+But what is the measure of a true hero ?
+Ah , that is what our story is ... Will you listen to him ?
+He 's makin ' the story sound like some Greek tragedy .
+Lighten up , dude .
+We 'll take it from here , darling .
+You go , girl .
+We are the muses ...
+goddesses of the arts and proclaimers of heroes . ”
+Answer:
+1.	golden age | False | as it is an adjective followed by a noun
+2.	story sound | False | as sound is a verb here, not a noun
+3.	sound like | False | as the meaning is compositional
+4.	Lighten up | True | as the meaning is not literal (idiom)
+5.	take it from here | True | as it is a non-compositional saying (idiom)
+Paragraph:
+“

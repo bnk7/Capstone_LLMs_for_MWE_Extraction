@@ -1,0 +1,8 @@
+pandas
+transformers
+sklearn
+torch
+evaluate
+pytorch-crf
+dotenv
+openai

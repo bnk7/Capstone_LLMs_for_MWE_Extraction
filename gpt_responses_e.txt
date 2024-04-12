@@ -1,0 +1,311 @@
+ID: 949
+1. hard subjects | False | as the meaning is compositional
+2. how to learn | True | as the verb and particle together mean acquire knowledge (verb-particle construction)
+3. difficult | False | as it is an adjective modifying a noun
+4. noble | False | as it is an adjective modifying a noun
+5. great discoveries | True | as two nouns form a single noun phrase (noun-noun compound)
+6. accept | False | as the meaning is literal
+7. to make | False | as the meaning is literal
+8. was hard | False | as the meaning is literal
+9. vilified | False | as it is a separate adjective
+10. persecuted | False | as it is a separate adjective
+11. hounded down | True | as the verb and particle together mean pursued relentlessly (verb-particle construction)
+12. were hard | False | as the meaning is literal
+13. complain | False | as the meaning is literal
+ID: 38335
+1. move here | True | as the verb and particle together mean relocate (verb-particle construction)
+2. gone by | False | as the meaning is literal
+3. flipped off | True | as the verb and particle together mean insult (verb-particle construction)
+4. rammed into | True | as the verb and particle together mean collide (verb-particle construction)
+5. drive like maniacs | True | as the meaning is not literal (idiom)
+6. abolished | False | as the meaning is literal
+ID: 7262
+1. take care | False | as the meaning is compositional
+2. started to toss around | True | as the verb and particle together mean consider (verb-particle construction)
+3. stay at home | True | as two nouns form a single noun phrase (noun-noun compound)
+4. house husband | True | as two nouns form a single noun phrase (noun-noun compound)
+5. family manager | True | as two nouns form a single noun phrase (noun-noun compound)
+6. child care provider | True | as three nouns form a single noun phrase (noun-noun compound)
+7. domestic engineer | True | as two nouns form a single noun phrase (noun-noun compound)
+8. full-time father | True | as two nouns form a single noun phrase (noun-noun compound)
+9. dad on duty | True | as two nouns form a single noun phrase (noun-noun compound)
+10. deep down | True | as the meaning is non-compositional (idiom)
+11. act like | False | as the meaning is compositional
+ID: 14722
+1. multiple disabilities | True | as two adjectives come together to form one noun phrase (adjective-noun compound)
+2. severe disabilities | True | as two adjectives come together to form one noun phrase (adjective-noun compound)
+3. last bit | True | as two nouns come together to form one noun phrase (noun-noun compound)
+4. parental fevered dreams | True | as three nouns come together to form one noun phrase (noun-noun compound)
+5. real to worry about | False | as the meaning is compositional
+ID: 5592
+1. New York City | True | as two nouns form a single noun phrase (noun-noun compound)
+2. heteronormative conceptualizations | True | as two nouns form a single noun phrase (noun-noun compound)
+3. spatiality and temporality | True | as two nouns form a single noun phrase (noun-noun compound)
+4. rural space | True | as two nouns form a single noun phrase (noun-noun compound)
+5. past versus | False | as it is compositional
+6. indeterminate space | True | as two nouns form a single phrase (noun-noun compound)
+7. right here | True | as it is non-compositional (idiom)
+8. hyper-present moment | True | as two nouns form a single noun phrase (noun-noun compound)
+9. queer space | True | as two nouns form a single noun phrase (noun-noun compound)
+10. unbridled queerness | True | as a noun and adjective form a single noun phrase (noun-noun compound)
+11. Caribbeanness | True | as two nouns form a single noun phrase (noun-noun compound)
+12. geographic and national | True | as two adjectives form a single noun phrase (noun-noun compound)
+13. masculine and feminine | True | as two adjectives form a single noun phrase (noun-noun compound)
+ID: 59802
+1. carry permit | True | as the verb and noun together form a single noun phrase (noun-noun compound)
+2. carries a gun | True | as the verb and noun together form a single noun phrase (noun-noun compound)
+3. insurance business | True | as two nouns form a single noun phrase (noun-noun compound)
+4. insurance investigators | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 3
+1. Los Angeles | True | as two nouns form a single noun phrase (noun-noun compound)
+2. Hall of Records | True | as two nouns form a single noun phrase (noun-noun compound)
+3. file folders | True | as two nouns form a single noun phrase (noun-noun compound)
+4. coroner's vault | True | as two nouns form a single noun phrase (noun-noun compound)
+5. young widows | True | as two nouns form a single noun phrase (noun-noun compound)
+6. suicide note | True | as two nouns form a single noun phrase (noun-noun compound)
+7. back to work | True | as the verb and particle together mean resume activity (verb-particle construction)
+8. genuine suicide note | True | as the adjective modifies the noun to function as a single semantic element (noun-noun compound)
+9. two thousand suicide notes | True | as the two nouns form a single noun phrase (noun-noun compound)
+ID: 12626
+1. getting pushed back | True | as the verb and particle together mean delayed (verb-particle construction)
+2. soldier on | True | as the verb and particle together mean continue persistently (verb-particle construction)
+3. popping up | True | as the verb and particle together mean appearing suddenly (verb-particle construction)
+4. be proactive | True | as the verb and adjective together mean take initiative (verb-particle construction)
+5. block construction | False | as the meaning is compositional
+6. stop by | True | as the verb and particle together mean visit briefly (verb-particle construction)
+7. marvel in | True | as the verb and preposition together mean be amazed by (verb preposition construction)
+ID: 29741
+1. late-summer flowering | True | as three nouns form a single noun phrase (noun-noun compound)
+2. ornamentals | True | as it is a noun formed by adding a suffix to another noun (noun-noun compound)
+3. taken aback | True | as the verb and particle together mean surprised (verb-particle construction)
+4. lack of space | True | as three words make up one noun phrase (noun-noun compound)
+5. sunny hillside | True | as two nouns come together to form one noun phrase (noun-noun compound)
+6. lower terrace | True | as two words make up one noun phrase (noun-noun compound)
+7. pot and conservatories | True | as two nouns come together to form one noun phrase (noun-noun compound)
+8. full size | True | as two words together mean complete size (noun-noun compound)
+ID: 51
+1. dedicate a hymn | True | as the verb and noun together form a single verb phrase (verb-noun compound)
+2. tender as | True | as the meaning is non-compositional (idiom)
+3. battle had long been won | True | as the meaning is non-compositional (idiom)
+4. heavy metal anthems | True | as two nouns form a single noun phrase (noun-noun compound)
+5. Let There Be Rock | True | as the meaning is non-compositional (idiom)
+6. never be an end | False | as the meaning is compositional 
+7. life on the road | True | as the meaning is non-compositional (idiom)
+8. meta-music | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 18695
+1. reason with | True | as reason carries more meaning than with (light verb construction)
+2. middle of the morning | True | as three nouns form a single noun phrase (noun-noun compound)
+3. tried and true | True | as the meaning is non-compositional (idiom)
+ID: 19617
+1. chary of | True | as the meaning is not literal (idiom)
+2. got along | True | as the verb and particle together mean got along well (verb-particle construction)
+3. joked about | True | as the verb and particle together mean joked (verb-particle construction)
+4. got away | True | as the verb and particle together mean escaped (verb-particle construction)
+5. sweet on | True | as the verb and particle together mean fond of (verb-particle construction)
+6. liked its | False | as the meaning is compositional
+7. liked best | True | as the verb and particle together mean preferred (verb-particle construction)
+8. argued about | True | as the verb and particle together mean disagreed (verb-particle construction)
+ID: 56
+1. forthcoming this month | True | as the meaning is not literal (idiom)
+2. years with Kolatch | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 30208
+1. Drugstore Cowboy | True | as two nouns form a single noun phrase (noun-noun compound)
+2. Terminator 2: Judgment Day | True | as a multiword movie title (multiword expression)
+ID: 28462
+Answer:
+1. late mother | True | as two nouns come together to form one noun phrase (noun-noun compound)
+2. newspaper interview | True | as two nouns come together to form one noun phrase (noun-noun compound)
+3. deep depression | True | as two nouns come together to form one noun phrase (noun-noun compound)
+4. cold turkey | True | as the meaning is non-compositional (idiom)
+5. make the right decision | True | as the verb and noun together form one phrase (verb-noun compound)
+6. growing up | True | as the verb and particle together mean develop (verb-particle construction)
+7. general manager | True | as two nouns come together to form one noun phrase (noun-noun compound)
+8. salaried employees | True | as two nouns come together to form one noun phrase (noun-noun compound)
+ID: 4542
+1. Antimotility drugs | True | as the compound noun combines two nouns to form one entity (noun-noun compound)
+2. acute diarrhoea | True | as two nouns form a single noun phrase (noun-noun compound)
+3. low dose | True | as the meaning is non-compositional (idiom)
+4. mode of action | True | as two nouns form a single noun phrase (noun-noun compound)
+5. side effect | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 78
+1. leisure time | True | as two nouns form a single noun phrase (noun-noun compound)
+2. reading the Bible | False | as the meaning is literal
+3. thanks to | True | as the meaning does not come from the individual words (idiom)
+4. modern science | True | as two nouns form a single noun phrase (noun-noun compound)
+5. serious critique | True | as two nouns form a single noun phrase (noun-noun compound)
+6. liberal democracy | True | as two nouns form a single noun phrase (noun-noun compound)
+7. campus radicals | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 34788
+1. let them off the hook | True | as the meaning is not literal (idiom)
+2. prepared to go | False | as the meaning is compositional
+3. be back | True | as the meaning is not literal (idiom)
+ID: 41661
+1. under fire | True | as the meaning is non-compositional (idiom)
+2. prison abuse scandal | True | as three nouns form a single noun phrase (noun-noun compound)
+3. inside story | True | as two nouns form a single noun phrase (noun-noun compound)
+4. COMMERCIAL BREAK | False | as it is composed of a noun and an adjective
+5. pep talk | True | as two nouns form a single noun phrase (noun-noun compound)
+6. Pentagon correspondents | True | as two nouns form a single noun phrase (noun-noun compound)
+7. much photographed abuses | True | as the entire phrase functions as a single noun (noun-noun compound)
+ID: 29816
+1. sought out | True | as out carries more meaning than sought (light verb construction)
+2. overall results | True | as two nouns form a single noun phrase (noun-noun compound)
+3. 10-minute checklist | True | as two nouns form a single noun phrase with an adjective (noun-noun compound)
+4. receptive to | True | as the verb and particle together mean open to (verb-particle construction)
+5. best treatments | True | as two nouns form a single noun phrase (noun-noun compound)
+6. different doctor | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 1757
+1. demands our attention | True | as attention contributes more meaning than demands (light verb construction)
+2. our mission | True | as two nouns form a single noun phrase (noun-noun compound)
+3. research activities | True | as two nouns form a single noun phrase (noun-noun compound)
+4. our role | True| as two nouns form a single noun phrase (noun-noun compound)
+5. Misconceptions about Knowledge Acquisition | True | as three nouns form a single noun phrase (noun-noun compound)
+6. Faculty research | True| as two nouns form a single noun phrase (noun-noun compound)
+7. Helping people understand | True | as the meaning is non-compositional (idiom)
+8. creation of new knowledge | True | as the meaning is non-compositional (idiom)
+9. close-up view | True | as two nouns form a single noun phrase (noun-noun compound)
+10. disciplinary knowledge | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 70507
+1. soulfully play | False | because the meaning is literal
+2. soulfully play | True | because the verb and the particle mean play in an emotional or expressive way (verb-particle construction)
+3. break all | True | because the verb and the particle mean violate or disregard (verb-particle construction)
+ID: 7990
+1. presidential ' debate' | True | as two nouns form a single noun phrase (noun-noun compound)
+2. near replicas | True | as two nouns come together to form one noun phrase (noun-noun compound)
+3. fielded by | False | as the meaning is literal
+4. aid to memory | True | as the meaning is not compositional (idiom)
+5. tackling the deficit | True | as two nouns form a single noun phrase (noun-noun compound)
+6. Social Security | True | as two nouns form a single noun phrase (noun-noun compound)
+7. Affordable Care Act | True | as three nouns form a single noun phrase (noun-noun compound)
+ID: 12256
+1. undocumented immigrants | True | as two nouns form a single noun phrase (noun-noun compound)
+2. focus on | False | as the meaning is literal
+3. stockpiling | True | as the verb and particle together mean amassing (verb-particle construction)
+4. White Supremacist | True | as two nouns form a single noun phrase (noun-noun compound)
+5. photo displays | True | as two nouns form a single noun phrase (noun-noun compound)
+6. rumors about violence | True | as two nouns form a single noun phrase (noun-noun compound)
+7. migration | False | as it is a single noun, not a multiword expression
+8. nation-states | True | as two nouns form a single noun phrase (noun-noun compound)
+9. fair share | False | as the meaning is compositional
+10. de-legitimize | True | as the meaning is not literal (idiom)
+11. immigration in general | True | as three nouns form a single noun phrase (noun-noun compound)
+ID: 16810
+1. sideshow acts | True | as two nouns form a single noun phrase (noun-noun compound)
+2. midway shut down | False | as the meaning is compositional
+3. casual queries | True | as two nouns form a single noun phrase (noun-noun compound)
+4. data theft | True | as two nouns form a single noun phrase (noun-noun compound)
+5. Gerhand's father | True | as two nouns form a single noun phrase (noun-noun compound)
+6. tight-beam broadcast | True | as three nouns form a single noun phrase (noun-noun compound)
+7. hairthin wire | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 64647
+1. level this place | True | as the verb and noun together mean destroy (verb-particle construction)
+2. never leaves any witnesses | True | as the verb and noun together mean not allow anyone to see (verb-particle construction)
+3. blow this monastery | True | as the verb and noun together mean destroy (verb-particle construction)
+4. right off the map | True | as the meaning is non-compositional (idiom)
+5. what happens next | True | as the meaning is non-compositional (idiom)
+ID: 974
+1. student evaluations | True | as two nouns form a single noun phrase (noun-noun compound)
+2. aspiring teacher | True | as two nouns form a single noun phrase (noun-noun compound)
+3. political beneficiaries | True | as two nouns form a single noun phrase (noun-noun compound)
+4. prudent teacher | True | as two nouns form a single noun phrase (noun-noun compound)
+5. good idea | True | as two nouns form a single noun phrase (noun-noun compound)
+6. to no avail | True | as the meaning is non-compositional (idiom)
+ID: 25263
+1. bridge group | True | as two nouns form a single noun phrase (noun-noun compound)
+2. weekly game | True | as two nouns form a single noun phrase (noun-noun compound)
+3. straight to space | True | as the meaning is non-compositional (idiom)
+4. shot to the moon | True | as the meaning is non-compositional (idiom)
+5. under the weather | True | as the meaning is non-compositional (idiom)
+ID: 23679
+1. stepped out | True | as the verb and particle together mean exited (verb-particle construction)
+2. reined in | True | as the verb and particle together mean stopped (verb-particle construction)
+3. make out | True | as the verb and particle together mean understand (verb-particle construction)
+4. climbed into | True | as the verb and particle together mean entered (verb-particle construction)
+5. hired the guy | True | as the verb and noun together form a single noun phrase (noun-noun compound)
+6. poke around | True | as the verb and particle together mean investigate (verb-particle construction)
+7. rode back | True | as the verb and particle together mean returned (verb-particle construction)
+ID: 108
+1. psychological projection | True| as two nouns form a single noun phrase (noun-noun compound)
+2. macrocosm reflects | True | as the verb and noun together mean mirrors (verb particle construction)
+3. old trope | True | as two nouns form a single noun phrase (noun-noun compound)
+4. polars Gothic | True | as two nouns form a single noun phrase (noun-noun compound)
+5. lost civilization | True | as two nouns form a single noun phrase (noun-noun compound)
+6. Solaris | False | as it is a proper noun
+7. human psyche | True | as two nouns form a single noun phrase (noun-noun compound)
+8. food chain | True | as two nouns form a single noun phrase (noun-noun compound)
+ID: 93
+1. ancient Mariner | True | two nouns form a single noun phrase (noun-noun compound)
+2. pre-Shakespearean | False | the two adjectives are not functioning as a single unit
+3. sixteenth-century | False | the two adjectives are not functioning as a single unit
+4. antiquarian commentator | True | two nouns form a single noun phrase (noun-noun compound)
+5. Old and New Testaments | True | the phrase has a specific meaning beyond its literal interpretation (idiom)
+6. complex textual strata | True | two nouns form a single noun phrase (noun-noun compound)
+7. all-too-human | False | the adjectives are not functioning as a single unit
+8. Southern Ocean | True | two nouns form a single noun phrase (noun-noun compound)
+9. animate universe | True | two nouns form a single noun phrase (noun-noun compound)
+10. hollow earth | True | two nouns form a single noun phrase (noun-noun compound)
+11. warm waters | True | two nouns form a single noun phrase (noun-noun compound)
+12. new and untried world | True | the phrase has a specific meaning beyond its literal interpretation (idiom)
+ID: 53602
+1. shot Santa's reindeer deer | True | as the meaning comes from the whole phrase, not the individual words (idiom)
+2. twelve-point buck | True | as two nouns form a single noun phrase (noun-noun compound)
+3. standing on | False | as the meaning is literal
+ID: 87
+1. The intertwined | True | as the two words form a single noun phrase (noun-noun compound)
+2. as we will see | False | as the meaning is compositional
+3. redactor | False | as it is a single noun
+4. syncretic conceits | True | as the two nouns form a single noun phrase (noun-noun compound)
+5. of the old science | False | as it is a prepositional phrase
+6. Westerners | False | as it is a single noun
+7. Neoplatonic metaphors | True | as the two nouns form a single noun phrase (noun-noun compound)
+8. Naturphilosophie | False | as it is a single noun
+9. aesthetic | False | as it is a single adjective
+10. the cosmos | True | as the two words form a single noun phrase (noun-noun compound)
+11. literary genre | True | as the two words form a single noun phrase (noun-noun compound)
+12. mystical geography | True | as the two words form a single noun phrase (noun-noun compound)
+13. quest literature | True | as the two words form a single noun phrase (noun-noun compound)
+ID: 1353
+1. windbreakers | True | as two nouns come together to form one noun phrase (noun-noun compound)
+2. school logo | True | as two nouns come together to form one noun phrase (noun-noun compound)
+3. casual days | True | as two nouns come together to form one noun phrase (noun-noun compound)
+4. monetary gifts | True | as two nouns come together to form one noun phrase (noun-noun compound)
+5. washers and dryers | True | as two nouns come together to form one noun phrase (noun-noun compound)
+6. homework duties | True | as two nouns come together to form one noun phrase (noun-noun compound)
+7. laundry duties | True | as two nouns come together to form one noun phrase (noun-noun compound)
+8. school uniform | True | as two nouns come together to form one noun phrase (noun-noun compound)
+9. uniform policy | True | as two nouns come together to form one noun phrase (noun-noun compound)
+10. uniform implementation | True | as two nouns come together to form one noun phrase (noun-noun compound)
+11. delinquency reduction | True | as two nouns come together to form one noun phrase (noun-noun compound)
+12. gang activity | True | as two nouns come together to form one noun phrase (noun-noun compound)
+13. school uniform dress codes | True | as three nouns come together to form one noun phrase (noun-noun compound)
+14. mandatory program | True | as two nouns come together to form one noun phrase (noun-noun compound)
+15. quality of education | True | as four nouns come together to form one noun phrase (noun-noun compound)
+16. learning environment | True | as two nouns come together to form one noun phrase (noun-noun compound)
+ID: 10751
+1. fell short | True | as the verb and particle together mean failed to meet expectations (verb-particle construction)
+2. became Republicans | True | as the verb and noun together form a single noun phrase (noun-noun compound)
+3. fell short | True | as the verb and particle together mean failed to meet expectations (verb-particle construction)
+4. lower crime rate | True | as the adjective and noun together form a single noun phrase (noun-noun compound)
+5. get divorced | True | as the verb and particle together mean go through a divorce (verb-particle construction)
+6. Sing with me | True | as the verb and particle together mean participate in singing together (verb-particle construction)
+ID: 60700
+1. Great story | False | as it is an adjective followed by a noun
+2. Do I | False | as the meaning is literal
+3. Lovely gesture | True | as two nouns form a single noun phrase (noun-noun compound)
+4. Shorter than we think | False | as the meaning is literal
+5. Friends again | False | as it is an adjective followed by a noun
+ID: 73009
+1. undo the chest clip | True | as chest clip is a single noun phrase (noun-noun compound)
+2. pull over | True | as the verb and particle together mean stop (verb-particle construction)
+3. patient talks | True | as two nouns come together to form one noun phrase (noun-noun compound)
+4. getting in really big trouble | True | as the meaning comes from the noun trouble rather than the verb getting (light verb construction)
+5. keep it on | True | as the meaning comes from the noun on rather than the verb keep (light verb construction)
+ID: 73983
+1. sit there | False | as the meaning is literal
+2. rurals | False | as it is a proper noun
+3. very conservative | False | as the meaning is compositional
+4. move into | False | as the meaning is compositional
+5. Mahoning Valley | False | as it is a proper noun
+6. coal | False | as the meaning is literal
+7. come out of | False | as the meaning is compositional
+8. auto bailout | False | as the meaning is compositional
