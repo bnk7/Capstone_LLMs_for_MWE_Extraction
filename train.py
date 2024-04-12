@@ -15,7 +15,7 @@ parser.add_argument('--epochs', type=int, default=10)
 parser.add_argument('--eval_every', type=int, default=5)
 parser.add_argument('--batch_size', type=int, default=16)
 parser.add_argument('--crf', action='store_true')
-parser.add_argument('--predict_classes', action='store_true')
+parser.add_argument('--mwe_type', choices=['all', 'none', 'v-p_construction', 'light_v', 'nn_comp', 'idiom', 'other'])
 args = parser.parse_args()
 
 seqeval = evaluate.load("seqeval")
@@ -25,7 +25,7 @@ print('Using device:', device)
 
 def train(dataloaders: dict[str, DataLoader]) -> None:
     print(f'Training began at {datetime.now()}.')
-    classes = 9 if args.predict_classes else 3
+    classes = 9 if args.mwe_type == 'all' else 3
     model = BertCRF(num_classes=classes) if args.crf else CustomBert(num_classes=classes)
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
@@ -80,8 +80,13 @@ def evaluate(dataloaders: dict[str, DataLoader], model: CustomBert | BertCRF) ->
 
 
 if __name__ == '__main__':
-    mode = 'merge_idiom_other' if args.predict_classes else 'merge_mwes'
-    data = Data(mode=mode)
+    if args.mwe_type == 'all':
+        mode = 'all'
+    elif args.mwe_type == 'none':
+        mode = 'MWE'
+    else:
+        mode = args.mwe_type.upper()
+    data = Data(mwe_type=mode)
 
     # create dictionary of dataloaders
     dloaders = {}

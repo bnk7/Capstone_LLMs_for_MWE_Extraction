@@ -7,18 +7,22 @@ from collections import Counter
 
 
 class Data:
-    def __init__(self, mode: str = 'merge_idiom_other'):
+    def __init__(self, mwe_type: str = 'all', merge_idiom_other=True):
         """
-        :param mode: which tagset to use: all, merge_idiom_other, or merge_mwes
+        :param mwe_type: all (all MWE types), MWE (merge all MWE types),
+        V-P_CONSTRUCTION, LIGHT_V, NN_COMP, IDIOM, or OTHER
+        :param merge_idiom_other: whether to merge the idiom and other categories
         """
-        if mode == 'merge_mwes':
-            labels = ['O', 'B-MWE', 'I-MWE']
-        else:
+        if mwe_type == 'all':
             labels = ['O', 'B-V-P_CONSTRUCTION', 'I-V-P_CONSTRUCTION', 'B-LIGHT_V', 'I-LIGHT_V',
                       'B-NN_COMP', 'I-NN_COMP', 'B-IDIOM', 'I-IDIOM']
-            if mode == 'all':
+            if not merge_idiom_other:
                 labels.extend(['B-OTHER', 'I-OTHER'])
-        self.mode = mode
+        else:
+            labels = ['O', 'B-' + mwe_type, 'I-' + mwe_type]
+
+        self.mwe_type = mwe_type
+        self.merge_idiom_other = merge_idiom_other
         self.label_itos = {i: label for (i, label) in enumerate(labels)}
         self.label_stoi = {label: i for (i, label) in enumerate(labels)}
         self.tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -31,6 +35,10 @@ class Data:
         :param instance: a data point
         :return: Formatted labels and tokens
         """
+        labels = ['O', 'B-V-P_CONSTRUCTION', 'I-V-P_CONSTRUCTION', 'B-LIGHT_V', 'I-LIGHT_V',
+                  'B-NN_COMP', 'I-NN_COMP', 'B-IDIOM', 'I-IDIOM', 'B-OTHER', 'I-OTHER']
+        label_dict = {label: i for (i, label) in enumerate(labels)}
+
         old_tags = instance['labels']
         tokenized_input = self.tokenizer(instance['tokens'], is_split_into_words=True)
         tokens = self.tokenizer.convert_ids_to_tokens(tokenized_input['input_ids'])
@@ -44,12 +52,20 @@ class Data:
             else:
                 tag = old_tags[word]
 
-                # change all MWEs to B or I
-                if self.mode == 'merge_mwes' and tag > 2:
-                    tag = 1 if tag % 2 == 1 else 2
                 # change other to idiom
-                elif self.mode == 'merge_idiom_other' and tag > 8:
+                if self.merge_idiom_other and tag > 8:
                     tag -= 2
+                # change all MWEs to B or I
+                if self.mwe_type == 'MWE' and tag > 2:
+                    tag = 1 if tag % 2 == 1 else 2
+                # change non-target MWE types to O
+                elif self.mwe_type not in ['MWE', 'all']:
+                    if tag == label_dict['B-' + self.mwe_type]:
+                        tag = 1
+                    elif tag == ['I-' + self.mwe_type]:
+                        tag = 2
+                    else:
+                        tag = 0
 
                 if word == prev_word and tag % 2 == 1:
                     # change B to I
@@ -107,5 +123,5 @@ def write_csv(label_dict: dict[str, int]) -> None:
 
 
 if __name__ == '__main__':
-    ds = Data(mode='merge_idiom_other')
+    ds = Data()
     print(ds.dataset)
