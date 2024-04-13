@@ -62,7 +62,7 @@ class Data:
                 elif self.mwe_type not in ['MWE', 'all']:
                     if tag == label_dict['B-' + self.mwe_type]:
                         tag = 1
-                    elif tag == ['I-' + self.mwe_type]:
+                    elif tag == label_dict['I-' + self.mwe_type]:
                         tag = 2
                     else:
                         tag = 0
