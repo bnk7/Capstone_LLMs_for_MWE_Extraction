@@ -5,6 +5,7 @@ import evaluate
 import pprint
 from datetime import datetime
 import argparse
+import os
 
 from preprocess import Data
 from model import CustomBert, BertCRF
@@ -15,7 +16,8 @@ parser.add_argument('--epochs', type=int, default=10)
 parser.add_argument('--eval_every', type=int, default=5)
 parser.add_argument('--batch_size', type=int, default=16)
 parser.add_argument('--crf', action='store_true')
-parser.add_argument('--mwe_type', choices=['all', 'none', 'v-p_construction', 'light_v', 'nn_comp', 'idiom', 'other'])
+parser.add_argument('--mwe_type', choices=['all', 'none', 'v-p_construction', 'light_v', 'nn_comp', 'idiom', 'other'],
+                    default='all')
 args = parser.parse_args()
 
 seqeval = evaluate.load("seqeval")
@@ -47,6 +49,11 @@ def train(dataloaders: dict[str, DataLoader]) -> None:
         if (epoch+1) % args.eval_every == 0:
             evaluate(dataloaders, model)
 
+    # save model
+    filename = 'bert_crf_' if args.crf else 'bert_'
+    filename += '_'.join([args.mwe_type, str(args.lr), str(args.batch_size), str(args.epochs)])
+    torch.save(model.state_dict(), os.path.join('saved_models', filename))
+
 
 def evaluate(dataloaders: dict[str, DataLoader], model: CustomBert | BertCRF) -> None:
     model.to(device)
@@ -77,6 +84,18 @@ def evaluate(dataloaders: dict[str, DataLoader], model: CustomBert | BertCRF) ->
 
         results = seqeval.compute(predictions=predictions, references=true_labels)
         pprint.pprint(results)
+
+
+def predict(dataloaders: dict[str, DataLoader]) -> None:
+    classes = 9 if args.mwe_type == 'all' else 3
+    model = BertCRF(num_classes=classes) if args.crf else CustomBert(num_classes=classes)
+    filename = 'bert_crf_' if args.crf else 'bert_'
+    filename += '_'.join([args.mwe_type, args.lr, args.batch_size, args.epochs])
+    if os.path.exists(os.path.join('saved_models', filename)):
+        model.load_state_dict(torch.load(os.path.join('saved_models', filename)))
+        evaluate(dataloaders, model)
+    else:
+        train(dataloaders)
 
 
 if __name__ == '__main__':
