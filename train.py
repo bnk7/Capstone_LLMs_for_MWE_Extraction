@@ -1,4 +1,3 @@
-import torch.nn as nn
 import torch
 from torch.utils.data import DataLoader
 import evaluate
@@ -9,6 +8,7 @@ import os
 
 from preprocess import Data
 from model import CustomBert, BertCRF
+from utils import get_dataloaders
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--lr', type=float, default=0.0001)
@@ -25,7 +25,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print('Using device:', device)
 
 
-def train(dataloaders: dict[str, DataLoader]) -> None:
+def train(dataloaders: dict[str, DataLoader], data) -> None:
     print(f'Training began at {datetime.now()}.')
     classes = 9 if args.mwe_type == 'all' else 3
     model = BertCRF(num_classes=classes) if args.crf else CustomBert(num_classes=classes)
@@ -47,15 +47,15 @@ def train(dataloaders: dict[str, DataLoader]) -> None:
         print(f'Epoch {epoch+1} finished at {datetime.now()}.')
         print('Epoch loss:', epoch_loss)
         if (epoch+1) % args.eval_every == 0:
-            evaluate(dataloaders, model)
+            evaluate(dataloaders, model, data)
 
     # save model
     filename = 'bert_crf_' if args.crf else 'bert_'
     filename += '_'.join([args.mwe_type, str(args.lr), str(args.batch_size), str(args.epochs)])
-    torch.save(model.state_dict(), os.path.join('saved_models', filename))
+    torch.save(model.state_dict(), os.path.join('saved_models', filename + '.pt'))
 
 
-def evaluate(dataloaders: dict[str, DataLoader], model: CustomBert | BertCRF) -> None:
+def evaluate(dataloaders: dict[str, DataLoader], model: CustomBert | BertCRF, data) -> None:
     model.to(device)
     with torch.no_grad():
         predictions = []
@@ -81,21 +81,8 @@ def evaluate(dataloaders: dict[str, DataLoader], model: CustomBert | BertCRF) ->
 
                 true_labels.append(masked_labels)
                 predictions.append(masked_preds)
-
-        results = seqeval.compute(predictions=predictions, references=true_labels)
-        pprint.pprint(results)
-
-
-def predict(dataloaders: dict[str, DataLoader]) -> None:
-    classes = 9 if args.mwe_type == 'all' else 3
-    model = BertCRF(num_classes=classes) if args.crf else CustomBert(num_classes=classes)
-    filename = 'bert_crf_' if args.crf else 'bert_'
-    filename += '_'.join([args.mwe_type, args.lr, args.batch_size, args.epochs])
-    if os.path.exists(os.path.join('saved_models', filename)):
-        model.load_state_dict(torch.load(os.path.join('saved_models', filename)))
-        evaluate(dataloaders, model)
-    else:
-        train(dataloaders)
+    results = seqeval.compute(predictions=predictions, references=true_labels)
+    pprint.pprint(results)
 
 
 if __name__ == '__main__':
@@ -105,19 +92,6 @@ if __name__ == '__main__':
         mode = 'MWE'
     else:
         mode = args.mwe_type.upper()
-    data = Data(mwe_type=mode)
-
-    # create dictionary of dataloaders
-    dloaders = {}
-    for split in data.dataset:
-        attrs = []
-        for attr in ['input_ids', 'attention_mask', 'labels']:
-            pad = -100 if attr == 'labels' else 0
-            tensor_list = [torch.tensor(lst) for lst in data.dataset[split][attr]]
-            padded_2d_tensor = nn.utils.rnn.pad_sequence(tensor_list, batch_first=True, padding_value=pad)
-            attrs.append(padded_2d_tensor)
-        dataset = torch.utils.data.TensorDataset(attrs[0], attrs[1], attrs[2])
-        dataloader = DataLoader(dataset=dataset, batch_size=args.batch_size, shuffle=True)
-        dloaders[split] = dataloader
-
-    train(dloaders)
+    data_instance = Data(mwe_type=mode)
+    dloaders = get_dataloaders(data_instance, args.batch_size)
+    train(dloaders, data_instance)
