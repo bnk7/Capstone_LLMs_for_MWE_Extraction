@@ -1,5 +1,7 @@
 import unittest
+import pandas as pd
 from utils import combine
+from preprocess import split_tokens
 
 
 class TestCombine1(unittest.TestCase):
@@ -78,6 +80,25 @@ class TestCombineAll(unittest.TestCase):
                                  ['O', 'O', 'O', 'O', 'O', 'B-IDIOM', 'I-IDIOM', 'B-IDIOM', 'I-IDIOM']),
                          ['B-V-P_CONSTRUCTION', 'I-V-P_CONSTRUCTION', 'O', 'B-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
                           'O', 'B-IDIOM', 'I-IDIOM'])
+
+
+class TestSplit(unittest.TestCase):
+    def test_all(self):
+        df = pd.DataFrame({'test_case': ['beginning_mwe', 'right_mwe', 'left_mwe', 'end_mwe'],
+                           'tokens': [['\nOnce', 'upon', 'a', 'time'], ['.\nOnce', 'upon', 'a', 'time'],
+                                      ['Once', 'upon', 'a', 'time\n,'], ['Once', 'upon', 'a', 'time\n']],
+                           'tags': [['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM'],
+                                    ['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM'],
+                                    ['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM'],
+                                    ['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM']]})
+        target_df = pd.DataFrame({'test_case': ['beginning_mwe', 'right_mwe', 'left_mwe', 'end_mwe'],
+                                  'tokens': [['Once', 'upon', 'a', 'time'], ['.', 'Once', 'upon', 'a', 'time'],
+                                             ['Once', 'upon', 'a', 'time', ','], ['Once', 'upon', 'a', 'time']],
+                                  'tags': [['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM'],
+                                           ['O', 'B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM'],
+                                           ['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM', 'O'],
+                                           ['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM']]})
+        self.assertTrue(df.apply(split_tokens, axis=1).equals(target_df))
 
 
 if __name__ == '__main__':
