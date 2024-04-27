@@ -43,19 +43,20 @@ def inference_from_pretrained(hyperparameters: dict[str], data=None):
                           str(hyperparameters['epochs'])])
     try:
         if device == 'cpu':
-            model.load_state_dict(torch.load(os.path.join('saved_models', filename), map_location=torch.device('cpu')))  # + '.pt'
+            model.load_state_dict(torch.load(os.path.join('saved_models', filename + '.pt'),
+                                             map_location=torch.device('cpu')))
         else:
-            model.load_state_dict(torch.load(os.path.join('saved_models', filename)))  # + '.pt'
+            model.load_state_dict(torch.load(os.path.join('saved_models', filename + '.pt')))
         return predict(dloaders['dev'], model, data_instance.label_itos, hyperparameters['crf'])
     except FileNotFoundError:
         print('No model was found fitting the specifications.')
 
 
 def predict_independently():
-    model_specs = {'nn_comp': {'mwe_type': 'NN_COMP', 'crf': False, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10},
-                   'v-p_construction': {'mwe_type': 'all', 'crf': False, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10},
-                   'light_v': {'mwe_type': 'all', 'crf': True, 'lr': 0.0001, 'batch_size': 4, 'epochs': 10},
-                   'idiom': {'mwe_type': 'all', 'crf': False, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10}}
+    model_specs = {'nn_comp': {'mwe_type': 'NN_COMP', 'crf': True, 'lr': 0.0001, 'batch_size': 4, 'epochs': 5},
+                   'v-p_construction': {'mwe_type': 'all', 'crf': True, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10},
+                   'light_v': {'mwe_type': 'all', 'crf': True, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10},
+                   'idiom': {'mwe_type': 'all', 'crf': True, 'lr': 0.0001, 'batch_size': 8, 'epochs': 10}}
 
     data_all = Data(mwe_type='all')
 

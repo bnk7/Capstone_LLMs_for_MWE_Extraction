@@ -74,9 +74,8 @@ class Data:
             new_tags.append(tag)
             prev_word = word
 
-        # BERT's max length is 512
-        tokenized_input['labels'] = new_tags[:512]
-        tokenized_input['tokens'] = tokens[:512]
+        tokenized_input['labels'] = new_tags
+        tokenized_input['tokens'] = tokens
         tokenized_input['doc_id'] = instance['doc_id']
         return pd.Series(tokenized_input)
 
