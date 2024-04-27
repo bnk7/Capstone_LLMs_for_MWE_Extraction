@@ -7,11 +7,11 @@ from preprocess import Data
 
 def get_dataloaders(data: Data, batch_size: int) -> dict[str, DataLoader]:
     """
-    Creates a dictionary of dataloaders
+    Create a dictionary of dataloaders
 
-    :param data:
-    :param batch_size:
-    :return:
+    :param data: instance of Data class
+    :param batch_size: batch size
+    :return: train, dev, and test dataloaders
     """
     dataloaders = {}
     for split in data.dataset:
@@ -31,7 +31,7 @@ def get_dataloaders(data: Data, batch_size: int) -> dict[str, DataLoader]:
 def filter_labels(all_labels: torch.Tensor | list[list[int]], label_itos: dict[int, str], msk: torch.tensor) \
         -> list[list[str]]:
     """
-    Converts label indices to strings, filtering out padding and special tokens
+    Convert label indices to strings, filtering out padding and special tokens
 
     :param all_labels: true or predicted labels
     :param label_itos: dictionary mapping label indices to strings
@@ -52,14 +52,30 @@ def filter_labels(all_labels: torch.Tensor | list[list[int]], label_itos: dict[i
 
 
 def add_previous_mwe(beginning_idx: int, curr_idx: int, mwe_list: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    """
+    If we've reached the end of a MWE, add it to the list
+
+    :param beginning_idx: starting index of the potential MWE
+    :param curr_idx: ending index of potential MWE + 1
+    :param mwe_list: current list of MWE spans
+    :return: modified list
+    """
     if beginning_idx != -1:
         mwe_list.append((beginning_idx, curr_idx - 1))
     return mwe_list
 
 
 def get_mwe_spans(labels: list[str], mwe_type: str) -> list[tuple[int, int]]:
+    """
+    Extract the token spans of every MWE of the specified type from the predictions
+
+    :param labels: predictions
+    :param mwe_type: type of multiword expression
+    :return: token spans of labels of specified type of multiword expression
+    """
     labels = [label if mwe_type in label else 'O' for label in labels]
     mwes = []
+    # keep track of the current MWE's start index; -1 indicates there is no current MWE
     beginning_idx_curr_mwe = -1
     for i, label in enumerate(labels):
         if label == 'O':
@@ -76,7 +92,16 @@ def get_mwe_spans(labels: list[str], mwe_type: str) -> list[tuple[int, int]]:
 
 def combine(nn_comp: list[str], v_p_construction: list[str], light_v_construction: list[str], idiom: list[str]) \
         -> list[str]:
-    # start with NN compound predictions
+    """
+    Combine separate model predictions for one paragraph into one
+
+    :param nn_comp: noun-noun compound predictions
+    :param v_p_construction: verb phrase construction predictions
+    :param light_v_construction: light verb construction predictions
+    :param idiom: idiom predictions
+    :return: combined predictions for one paragraph
+    """
+    # start with NN compound predictions because they are the most accurate
     combined_labels = nn_comp
     all_mwes = get_mwe_spans(combined_labels, 'NN_COMP')
     prediction_dict = {'V-P_CONSTRUCTION': v_p_construction, 'LIGHT_V': light_v_construction, 'IDIOM': idiom}
@@ -103,7 +128,13 @@ def combine(nn_comp: list[str], v_p_construction: list[str], light_v_constructio
     return combined_labels
 
 
-def combine_all(predictions: dict[str, list[list[str]]]):
+def combine_all(predictions: dict[str, list[list[str]]]) -> list[list[str]]:
+    """
+    Combine separate model predictions into one
+
+    :param predictions: model predictions for each MWE type
+    :return: combined predictions
+    """
     all_labels = []
     for idx, pred in enumerate(predictions['nn_comp']):
         all_labels.append(combine(pred, predictions['v-p_construction'][idx], predictions['light_v'][idx],

@@ -13,6 +13,15 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
 def predict(loader: DataLoader, model: CustomBert | BertCRF, label_itos: dict[int, str], crf: bool) -> list[list[str]]:
+    """
+    Perform inference with the given model on the given data
+
+    :param loader: dataloader
+    :param model: model
+    :param label_itos:
+    :param crf: whether the model includes a CRF layer
+    :return: predictions
+    """
     model.to(device)
     with torch.no_grad():
         predictions = []
@@ -25,7 +34,14 @@ def predict(loader: DataLoader, model: CustomBert | BertCRF, label_itos: dict[in
     return predictions
 
 
-def inference_from_pretrained(hyperparameters: dict[str], data=None):
+def inference_from_pretrained(hyperparameters: dict[str], data: Data = None) -> list[list[str]]:
+    """
+    Retrieve pretrained model that matches hyperparameters and perform inference
+
+    :param hyperparameters: model hyperparameters
+    :param data: shared Data instance
+    :return: predictions
+    """
     if data:
         data_instance = data
     else:
@@ -52,7 +68,12 @@ def inference_from_pretrained(hyperparameters: dict[str], data=None):
         print('No model was found fitting the specifications.')
 
 
-def predict_independently():
+def predict_independently() -> None:
+    """
+    Perform inference for each type of MWE, combine the predictions, and evaluate
+
+    :return: None
+    """
     model_specs = {'nn_comp': {'mwe_type': 'NN_COMP', 'crf': True, 'lr': 0.0001, 'batch_size': 4, 'epochs': 5},
                    'v-p_construction': {'mwe_type': 'all', 'crf': True, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10},
                    'light_v': {'mwe_type': 'all', 'crf': True, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10},
