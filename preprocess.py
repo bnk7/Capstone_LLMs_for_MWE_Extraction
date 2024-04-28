@@ -14,8 +14,7 @@ label_dict = {label: i for (i, label) in enumerate(label_list)}
 class Data:
     def __init__(self, mwe_type: str = 'all', merge_idiom_other=True):
         """
-        :param mwe_type: all (all MWE types), MWE (merge all MWE types),
-        V-P_CONSTRUCTION, LIGHT_V, NN_COMP, IDIOM, or OTHER
+        :param mwe_type: all (all MWE types), MWE (merge all MWE types), V-P_CONSTRUCTION, LIGHT_V, NN_COMP, IDIOM, or OTHER
         :param merge_idiom_other: whether to merge the idiom and other categories
         """
         if mwe_type == 'all':

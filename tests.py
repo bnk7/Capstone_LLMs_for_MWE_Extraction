@@ -1,7 +1,9 @@
 import unittest
 import pandas as pd
+from transformers import AutoTokenizer
 from utils import combine
 from preprocess import split_tokens
+from process_new_data import get_mwe_char_spans
 
 
 class TestCombine1(unittest.TestCase):
@@ -99,6 +101,48 @@ class TestSplit(unittest.TestCase):
                                            ['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM', 'O'],
                                            ['B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'I-IDIOM']]})
         self.assertTrue(df.apply(split_tokens, axis=1).equals(target_df))
+
+
+class TestSpans(unittest.TestCase):
+    def test_simple(self):
+        sentence = 'The uninhabitable house had the power of invisibility.'
+        tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+        tokenized_input = tokenizer(sentence)
+
+        preds = ['O', 'B-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
+                 'O', 'B-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'O', 'O', 'O', 'O']
+        self.assertEqual(get_mwe_char_spans(preds, tokenized_input),
+                         [('NN_COMP', 4, 23), ('LIGHT_V', 28, 40)])
+
+    def test_adjacent(self):
+        sentence = 'The uninhabitable house had the power of invisibility.'
+        tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+        tokenized_input = tokenizer(sentence)
+
+        preds = ['O', 'B-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
+                 'B-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'O', 'O', 'O', 'O']
+        self.assertEqual(get_mwe_char_spans(preds, tokenized_input),
+                         [('NN_COMP', 4, 23), ('LIGHT_V', 24, 40)])
+
+    def test_disagreement(self):
+        sentence = 'The uninhabitable house had the power of invisibility.'
+        tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+        tokenized_input = tokenizer(sentence)
+
+        preds = ['O', 'B-NN_COMP', 'O', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
+                 'B-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'O', 'O', 'O', 'O']
+        self.assertEqual(get_mwe_char_spans(preds, tokenized_input),
+                         [('NN_COMP', 4, 23), ('LIGHT_V', 24, 40)])
+
+    def test_only_i(self):
+        sentence = 'The uninhabitable house had the power of invisibility.'
+        tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+        tokenized_input = tokenizer(sentence)
+
+        preds = ['O', 'B-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
+                 'I-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'O', 'O', 'O', 'O']
+        self.assertEqual(get_mwe_char_spans(preds, tokenized_input),
+                         [('NN_COMP', 4, 23), ('LIGHT_V', 24, 40)])
 
 
 if __name__ == '__main__':
