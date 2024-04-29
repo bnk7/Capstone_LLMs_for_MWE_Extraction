@@ -4,39 +4,27 @@ from transformers import AutoTokenizer
 import os
 from sklearn.model_selection import train_test_split
 from collections import Counter
-
-
-label_list = ['O', 'B-V-P_CONSTRUCTION', 'I-V-P_CONSTRUCTION', 'B-LIGHT_V', 'I-LIGHT_V', 'B-NN_COMP', 'I-NN_COMP',
-              'B-IDIOM', 'I-IDIOM', 'B-OTHER', 'I-OTHER']
-label_dict = {label: i for (i, label) in enumerate(label_list)}
+from utils import get_label_dicts
 
 
 class Data:
-    def __init__(self, mwe_type: str = 'all', merge_idiom_other=True):
+    def __init__(self, mwe_type: str = 'all', merge_idiom_other: bool = True):
         """
         :param mwe_type: all (all MWE types), MWE (merge all MWE types), V-P_CONSTRUCTION, LIGHT_V, NN_COMP, IDIOM, or OTHER
         :param merge_idiom_other: whether to merge the idiom and other categories
         """
-        if mwe_type == 'all':
-            labels = ['O', 'B-V-P_CONSTRUCTION', 'I-V-P_CONSTRUCTION', 'B-LIGHT_V', 'I-LIGHT_V',
-                      'B-NN_COMP', 'I-NN_COMP', 'B-IDIOM', 'I-IDIOM']
-            if not merge_idiom_other:
-                labels.extend(['B-OTHER', 'I-OTHER'])
-        else:
-            labels = ['O', 'B-' + mwe_type, 'I-' + mwe_type]
-
         self.mwe_type = mwe_type
         self.merge_idiom_other = merge_idiom_other
-        self.label_itos = {i: label for (i, label) in enumerate(labels)}
-        self.label_stoi = {label: i for (i, label) in enumerate(labels)}
+        self.label_itos, self.label_stoi = get_label_dicts(mwe_type, merge_idiom_other)
         self.tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
         self.dataset = self.build_dataset()
 
-    def tokenize_and_format_labels(self, instance: pd.Series) -> pd.Series:
+    def tokenize_and_format_labels(self, instance: pd.Series, label_dict: dict[str, int]) -> pd.Series:
         """
         Format the labels to align with the BERT tokenizer
 
         :param instance: a data point
+        :param label_dict: mapping from label string to index
         :return: Formatted labels and tokens
         """
         old_tags = instance['labels']
@@ -84,14 +72,15 @@ class Data:
 
         :return: Tokenized train/test/dev split
         """
+        label_dict = get_label_dicts('all', False)[1]
         if not os.path.exists('data/indexed_bio_labels.csv'):
-            write_csv()
+            write_csv(label_dict)
 
         dataset = pd.read_csv('data/indexed_bio_labels.csv')
         dataset['tokens'] = dataset['tokens'].map(ast.literal_eval)
         dataset['labels'] = dataset['tag_indices'].map(ast.literal_eval)
         dataset = dataset.drop(['Unnamed: 0', 'tags', 'tag_indices'], axis=1)
-        dataset = dataset.apply(lambda row: self.tokenize_and_format_labels(row), axis=1)
+        dataset = dataset.apply(lambda row: self.tokenize_and_format_labels(row, label_dict), axis=1)
 
         train, test_dev = train_test_split(dataset, test_size=0.2, random_state=24)
         dev, test = train_test_split(test_dev, test_size=0.5, random_state=24)
@@ -108,10 +97,11 @@ class Data:
                 'dev': dev.to_dict(orient='list')}
 
 
-def write_csv() -> None:
+def write_csv(label_dict: dict[str, int]) -> None:
     """
     Create a CSV with the tags converted to indices
 
+    :param label_dict: mapping from label string to index
     :return: None
     """
     df = pd.read_csv('data/bio_labels.csv')

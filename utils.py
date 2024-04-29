@@ -65,7 +65,7 @@ def add_previous_mwe(beginning_idx: int, curr_idx: int, mwe_list: list[tuple[int
     return mwe_list
 
 
-def get_mwe_spans(labels: list[str], mwe_type: str) -> list[tuple[int, int]]:
+def get_mwe_token_spans(labels: list[str], mwe_type: str) -> list[tuple[int, int]]:
     """
     Extract the token spans of every MWE of the specified type from the predictions
 
@@ -103,12 +103,12 @@ def combine(nn_comp: list[str], v_p_construction: list[str], light_v_constructio
     """
     # start with NN compound predictions because they are the most accurate
     combined_labels = nn_comp
-    all_mwes = get_mwe_spans(combined_labels, 'NN_COMP')
+    all_mwes = get_mwe_token_spans(combined_labels, 'NN_COMP')
     prediction_dict = {'V-P_CONSTRUCTION': v_p_construction, 'LIGHT_V': light_v_construction, 'IDIOM': idiom}
 
     for mwe_type in prediction_dict:
         new_labels = prediction_dict[mwe_type]
-        new_mwes = get_mwe_spans(new_labels, mwe_type)
+        new_mwes = get_mwe_token_spans(new_labels, mwe_type)
 
         # add non-overlapping new mwes
         for span in new_mwes:
@@ -140,3 +140,21 @@ def combine_all(predictions: dict[str, list[list[str]]]) -> list[list[str]]:
         all_labels.append(combine(pred, predictions['v-p_construction'][idx], predictions['light_v'][idx],
                                   predictions['idiom'][idx]))
     return all_labels
+
+
+def get_label_dicts(mwe_type: str, merge_idiom_other: bool = True) -> tuple[dict[int, str], dict[str, int]]:
+    """
+    Get mapping between label strings and indices
+
+    :param mwe_type: type of MWE
+    :param merge_idiom_other: whether to merge the idiom and other categories
+    :return: mappings from label index to string and string to index
+    """
+    if mwe_type == 'all':
+        labels = ['O', 'B-V-P_CONSTRUCTION', 'I-V-P_CONSTRUCTION', 'B-LIGHT_V', 'I-LIGHT_V',
+                  'B-NN_COMP', 'I-NN_COMP', 'B-IDIOM', 'I-IDIOM']
+        if not merge_idiom_other:
+            labels.extend(['B-OTHER', 'I-OTHER'])
+    else:
+        labels = ['O', 'B-' + mwe_type, 'I-' + mwe_type]
+    return {i: label for (i, label) in enumerate(labels)}, {label: i for (i, label) in enumerate(labels)}

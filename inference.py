@@ -18,7 +18,7 @@ def predict(loader: DataLoader, model: CustomBert | BertCRF, label_itos: dict[in
 
     :param loader: dataloader
     :param model: model
-    :param label_itos:
+    :param label_itos: mapping from label index to string
     :param crf: whether the model includes a CRF layer
     :return: predictions
     """

@@ -2,7 +2,7 @@ from transformers import AutoTokenizer, BatchEncoding
 import torch
 import os
 from model import CustomBert, BertCRF
-from utils import filter_labels, combine_all
+from utils import filter_labels, combine_all, get_label_dicts
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -12,14 +12,14 @@ def get_mwe_char_spans(labels: list[str], tokenized: BatchEncoding) -> list[tupl
     Extract the character spans of every MWE from the predictions
 
     :param labels: predictions
-    :param tokenized:
+    :param tokenized: tokenized user input
     :return: MWE types and character spans
     """
 
     # change labels to be per word rather than per token (sub-word)
     # the label of the word is equal to the label of its first token
     word_preds = []
-    word_ids = tokenized.word_ids()[1:-1]  # exclude start and end
+    word_ids = tokenized.word_ids()[1:-1]  # exclude [CLS] and [SEP]
     for i, word_id in enumerate(word_ids):
         if i == 0 or word_id != word_ids[i - 1]:
             word_preds.append(labels[i])
@@ -63,7 +63,17 @@ def add_previous_mwe_with_type(beginning_idx: int, curr_idx: int, mwe_type: str,
     return mwe_list
 
 
-def predict(tokenized: BatchEncoding, model: CustomBert | BertCRF, label_itos: dict[int, str], crf: bool):
+def predict(tokenized: BatchEncoding, model: CustomBert | BertCRF, label_itos: dict[int, str], crf: bool) \
+        -> list[list[str]]:
+    """
+    Perform inference with the given model on the given input
+
+    :param tokenized: tokenized user input
+    :param model: model
+    :param label_itos: mapping from label index to string
+    :param crf: whether the model includes a CRF layer
+    :return: predictions
+    """
     model.to(device)
     with torch.no_grad():
         x = torch.tensor(tokenized['input_ids']).unsqueeze(dim=0)
@@ -75,7 +85,16 @@ def predict(tokenized: BatchEncoding, model: CustomBert | BertCRF, label_itos: d
     return predictions
 
 
-def inference_from_pretrained(hyperparameters, tokenized, label_itos):
+def inference_from_pretrained(hyperparameters: dict[str], tokenized: BatchEncoding, label_itos: dict[int, str]) \
+        -> list[list[str]]:
+    """
+    Retrieve pretrained model that matches hyperparameters and perform inference
+
+    :param hyperparameters: model hyperparameters
+    :param tokenized: tokenized user input
+    :param label_itos: mapping from label index to string
+    :return: predictions
+    """
     classes = 9 if hyperparameters['mwe_type'] == 'all' else 3
     model = BertCRF(num_classes=classes) if hyperparameters['crf'] else CustomBert(num_classes=classes)
     filename = 'bert_crf_' if hyperparameters['crf'] else 'bert_'
@@ -92,7 +111,13 @@ def inference_from_pretrained(hyperparameters, tokenized, label_itos):
         print('No model was found fitting the specifications.')
 
 
-def predict_independently(tokenized):
+def predict_independently(tokenized: BatchEncoding) -> list[str]:
+    """
+    Perform inference for each type of MWE and combine the predictions
+
+    :param tokenized: tokenized user input
+    :return: combined predictions
+    """
     model_specs = {'nn_comp': {'mwe_type': 'NN_COMP', 'crf': True, 'lr': 0.0001, 'batch_size': 4, 'epochs': 5},
                    'v-p_construction': {'mwe_type': 'all', 'crf': True, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10},
                    'light_v': {'mwe_type': 'all', 'crf': True, 'lr': 0.0001, 'batch_size': 16, 'epochs': 10},
@@ -108,21 +133,12 @@ def predict_independently(tokenized):
         if copied_prediction:
             predicted[model] = copied_prediction
         elif model_specs[model]['mwe_type'] == 'all':
-            predicted[model] = inference_from_pretrained(model_specs[model], tokenized, get_label_dict('all'))
+            predicted[model] = inference_from_pretrained(model_specs[model], tokenized, get_label_dicts('all')[0])
         else:
             predicted[model] = inference_from_pretrained(model_specs[model], tokenized,
-                                                         get_label_dict(model_specs[model]['mwe_type']))
+                                                         get_label_dicts(model_specs[model]['mwe_type'])[0])
     combined_predicted = combine_all(predicted)[0]
     return combined_predicted
-
-
-def get_label_dict(mwe_type):
-    if mwe_type == 'all':
-        labels = ['O', 'B-V-P_CONSTRUCTION', 'I-V-P_CONSTRUCTION', 'B-LIGHT_V', 'I-LIGHT_V',
-                  'B-NN_COMP', 'I-NN_COMP', 'B-IDIOM', 'I-IDIOM']
-    else:
-        labels = ['O', 'B-' + mwe_type, 'I-' + mwe_type]
-    return {i: label for (i, label) in enumerate(labels)}
 
 
 if __name__ == '__main__':
