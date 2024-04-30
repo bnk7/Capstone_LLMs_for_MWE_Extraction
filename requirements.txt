@@ -6,3 +6,5 @@ evaluate
 pytorch-crf
 dotenv
 openai
+spacy
+streamlit

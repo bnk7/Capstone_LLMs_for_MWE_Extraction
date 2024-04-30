@@ -112,7 +112,7 @@ class TestSpans(unittest.TestCase):
         preds = ['O', 'B-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
                  'O', 'B-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'O', 'O', 'O', 'O']
         self.assertEqual(get_mwe_char_spans(preds, tokenized_input),
-                         [('NN_COMP', 4, 23), ('LIGHT_V', 28, 40)])
+                         [('NN_COMP', 4, 24), ('LIGHT_V', 28, 41)])
 
     def test_adjacent(self):
         sentence = 'The uninhabitable house had the power of invisibility.'
@@ -122,7 +122,7 @@ class TestSpans(unittest.TestCase):
         preds = ['O', 'B-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
                  'B-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'O', 'O', 'O', 'O']
         self.assertEqual(get_mwe_char_spans(preds, tokenized_input),
-                         [('NN_COMP', 4, 23), ('LIGHT_V', 24, 40)])
+                         [('NN_COMP', 4, 24), ('LIGHT_V', 24, 41)])
 
     def test_disagreement(self):
         sentence = 'The uninhabitable house had the power of invisibility.'
@@ -132,7 +132,7 @@ class TestSpans(unittest.TestCase):
         preds = ['O', 'B-NN_COMP', 'O', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
                  'B-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'O', 'O', 'O', 'O']
         self.assertEqual(get_mwe_char_spans(preds, tokenized_input),
-                         [('NN_COMP', 4, 23), ('LIGHT_V', 24, 40)])
+                         [('NN_COMP', 4, 24), ('LIGHT_V', 24, 41)])
 
     def test_only_i(self):
         sentence = 'The uninhabitable house had the power of invisibility.'
@@ -142,7 +142,7 @@ class TestSpans(unittest.TestCase):
         preds = ['O', 'B-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP', 'I-NN_COMP',
                  'I-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'I-LIGHT_V', 'O', 'O', 'O', 'O']
         self.assertEqual(get_mwe_char_spans(preds, tokenized_input),
-                         [('NN_COMP', 4, 23), ('LIGHT_V', 24, 40)])
+                         [('NN_COMP', 4, 24), ('LIGHT_V', 24, 41)])
 
 
 if __name__ == '__main__':

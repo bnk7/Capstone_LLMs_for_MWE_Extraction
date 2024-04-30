@@ -2,10 +2,8 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 import torch
 
-from preprocess import Data
 
-
-def get_dataloaders(data: Data, batch_size: int) -> dict[str, DataLoader]:
+def get_dataloaders(data, batch_size: int) -> dict[str, DataLoader]:
     """
     Create a dictionary of dataloaders
 

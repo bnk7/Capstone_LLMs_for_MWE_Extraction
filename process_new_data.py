@@ -53,13 +53,13 @@ def add_previous_mwe_with_type(beginning_idx: int, curr_idx: int, mwe_type: str,
     If we've reached the end of a MWE, add it to the list
 
     :param beginning_idx: starting index of the potential MWE
-    :param curr_idx: ending index of potential MWE + 1
+    :param curr_idx: ending index of potential MWE
     :param mwe_type: type of MWE
     :param mwe_list: current list of MWE spans
     :return: modified list
     """
     if beginning_idx != -1:
-        mwe_list.append((mwe_type, beginning_idx, curr_idx - 1))
+        mwe_list.append((mwe_type, beginning_idx, curr_idx))
     return mwe_list
 
 
@@ -141,10 +141,14 @@ def predict_independently(tokenized: BatchEncoding) -> list[str]:
     return combined_predicted
 
 
-if __name__ == '__main__':
-    user_input = 'This is a test of a multiword expression tokenizer.'
+def get_mwe_predictions(sentences: str) -> list[tuple[str, int, int]]:
     tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
-    tokenized_input = tokenizer(user_input)
+    tokenized_input = tokenizer(sentences)
     preds = predict_independently(tokenized_input)
     spans = get_mwe_char_spans(preds, tokenized_input)
-    print(spans)
+    return spans
+
+
+if __name__ == '__main__':
+    user_input = 'This is a test of a multiword expression tokenizer.'
+    print(get_mwe_predictions(user_input))
