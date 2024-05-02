@@ -14,14 +14,14 @@ if __name__ == '__main__':
     dataset = dataset.sort_values(by='doc_id')
     train, test_dev = train_test_split(dataset, test_size=0.2, random_state=24)
     dev, test = train_test_split(test_dev, test_size=0.5, random_state=24)
-    dev['all'] = dev['all'].map(ast.literal_eval)
+    test['all'] = test['all'].map(ast.literal_eval)
 
-    with open('prompt_g.txt', encoding='utf-8') as f:
+    with open('prompt_docs/prompt_e.txt', encoding='utf-8') as f:
         prompt_part1 = f.read() + ' '
     prompt_part3 = """ ”
 What is the answer?"""
 
-    for i, row in enumerate(dev.itertuples()):
+    for i, row in enumerate(test.itertuples()):
         doc_id = row.doc_id
         paragraph = row.original_text
         prompt = prompt_part1 + paragraph + prompt_part3
@@ -37,5 +37,5 @@ What is the answer?"""
         print(response)
 
         # save output to a file
-        with open('gpt_responses.txt', 'a') as f:
+        with open('prompt_docs/gpt_responses_e_test.txt', 'a') as f:
             f.write('ID: ' + str(doc_id) + '\n' + response + '\n')

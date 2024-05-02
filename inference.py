@@ -34,11 +34,12 @@ def predict(loader: DataLoader, model: CustomBert | BertCRF, label_itos: dict[in
     return predictions
 
 
-def inference_from_pretrained(hyperparameters: dict[str], data: Data = None) -> list[list[str]]:
+def inference_from_pretrained(hyperparameters: dict[str], eval_set: str, data: Data = None) -> list[list[str]]:
     """
     Retrieve pretrained model that matches hyperparameters and perform inference
 
     :param hyperparameters: model hyperparameters
+    :param eval_set:  the data to use (dev or test)
     :param data: shared Data instance
     :return: predictions
     """
@@ -63,15 +64,16 @@ def inference_from_pretrained(hyperparameters: dict[str], data: Data = None) -> 
                                              map_location=torch.device('cpu')))
         else:
             model.load_state_dict(torch.load(os.path.join('saved_models', filename + '.pt')))
-        return predict(dloaders['dev'], model, data_instance.label_itos, hyperparameters['crf'])
+        return predict(dloaders[eval_set], model, data_instance.label_itos, hyperparameters['crf'])
     except FileNotFoundError:
         print('No model was found fitting the specifications.')
 
 
-def predict_independently() -> None:
+def predict_independently(eval_set: str) -> None:
     """
     Perform inference for each type of MWE, combine the predictions, and evaluate
 
+    :param eval_set: the data to use (dev or test)
     :return: None
     """
     model_specs = {'nn_comp': {'mwe_type': 'NN_COMP', 'crf': True, 'lr': 0.0001, 'batch_size': 4, 'epochs': 5},
@@ -91,21 +93,39 @@ def predict_independently() -> None:
         if copied_prediction:
             predicted[model] = copied_prediction
         elif model_specs[model]['mwe_type'] == 'all':
-            predicted[model] = inference_from_pretrained(model_specs[model], data=data_all)
+            predicted[model] = inference_from_pretrained(model_specs[model], eval_set, data=data_all)
         else:
-            predicted[model] = inference_from_pretrained(model_specs[model])
+            predicted[model] = inference_from_pretrained(model_specs[model], eval_set)
     combined_predicted = combine_all(predicted)
 
-    # get gold labels
-    dloaders = get_dataloaders(data_all, batch_size=16)
-    true_labels = []
-    for x, mask, y in dloaders['dev']:
-        true_labels.extend(filter_labels(y, data_all.label_itos, mask))
+    true_labels = get_gold_labels(data_all, 16, eval_set)
 
     # evaluate
     results = seqeval.compute(predictions=combined_predicted, references=true_labels)
     pprint.pprint(results)
 
 
+def get_gold_labels(data, batch_size: int, eval_set: str) -> list[list[str]]:
+    """
+    Get the gold labels from the given evaluation set
+
+    :param data: Data instance
+    :param batch_size: batch size
+    :param eval_set:  the data to use (dev or test)
+    :return: gold labels
+    """
+    dloaders = get_dataloaders(data, batch_size=batch_size)
+    gold_labels = []
+    for x, mask, y in dloaders[eval_set]:
+        gold_labels.extend(filter_labels(y, data.label_itos, mask))
+    return gold_labels
+
+
 if __name__ == '__main__':
-    predict_independently()
+    # predict_independently('dev')
+    specs = {'mwe_type': 'all', 'crf': False, 'lr': 0.00001, 'batch_size': 8, 'epochs': 10}
+    all_data = Data(mwe_type='all')
+    prediction = inference_from_pretrained(specs, 'test', all_data)
+    gold = get_gold_labels(all_data, specs['batch_size'], 'test')
+    result = seqeval.compute(predictions=prediction, references=gold)
+    pprint.pprint(result)

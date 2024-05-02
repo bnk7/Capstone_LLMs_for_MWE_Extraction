@@ -3,6 +3,7 @@ import pandas as pd
 import evaluate
 import pprint
 import ast
+from preprocess import split_tokens
 
 
 def get_pred_and_gold_labels(df_row: pd.Series,
@@ -19,7 +20,7 @@ def get_pred_and_gold_labels(df_row: pd.Series,
     :return: list of predicted labels and list of true labels
     """
     paragraph = df_row['original_text'].iloc[0]
-    true = df_row['all'].iloc[0]
+    true = df_row['tags'].iloc[0]
     true = [word.replace('OTHER', 'IDIOM') for word in true]  # merge these tags
 
     # extract MWEs from GPT output
@@ -55,7 +56,8 @@ def get_pred_and_gold_labels(df_row: pd.Series,
         num_tokens = len(expression.split())
         label = 'B-' + mwe_type + (' I-' + mwe_type) * (num_tokens - 1)
         labeled_paragraph = re.sub(expression, label, labeled_paragraph)
-    predicted = [label if label in label_set else 'O' for label in labeled_paragraph.split(' ')]
+    tokens = split_tokens(pd.Series([labeled_paragraph.split(' ')], index=['tokens']))['tokens']
+    predicted = [label if label in label_set else 'O' for label in tokens]
     return predicted, true
 
 
@@ -70,10 +72,12 @@ if __name__ == '__main__':
     suffixes = set(mwe_types.values())
     labels = [prefix + suffix for prefix in prefixes for suffix in suffixes]
 
-    df = pd.read_csv('data/annotations.csv', usecols=['doc_id', 'original_text', 'all'])
-    df['all'] = df['all'].map(ast.literal_eval)
+    df = pd.read_csv('data/annotations.csv', usecols=['doc_id', 'original_text'])
+    label_df = pd.read_csv('data/indexed_bio_labels.csv', usecols=['doc_id', 'tags'])
+    df = df.merge(label_df, on='doc_id', how='left')
+    df['tags'] = df['tags'].map(ast.literal_eval)
 
-    with open('gpt_responses.txt') as f:
+    with open('prompt_docs/gpt_responses_e_test.txt') as f:
         responses = f.read()
     responses = responses.split('ID: ')
     # isolate ID

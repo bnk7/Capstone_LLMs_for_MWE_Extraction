@@ -123,7 +123,7 @@ def split_tokens(row: pd.Series) -> pd.Series:
     new_labels = []
     for i, token in enumerate(row['tokens']):
         split_token = token.split()
-        curr_label = row['tags'][i]
+        curr_label = row['tags'][i] if 'tags' in row.index else 'O'
         if len(split_token) > 1:
             new_tokens.extend(split_token)
             if curr_label == 'O':
