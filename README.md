@@ -1,4 +1,4 @@
-# Capstone Project: Multiword Expression Extraction
+# Capstone Project: Multiword Expression Extraction using LLMs
 Spring 2024
 
 ## About
