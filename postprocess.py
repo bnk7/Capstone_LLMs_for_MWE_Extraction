@@ -77,7 +77,7 @@ if __name__ == '__main__':
     df = df.merge(label_df, on='doc_id', how='left')
     df['tags'] = df['tags'].map(ast.literal_eval)
 
-    with open('prompt_docs/gpt_responses_e_test.txt') as f:
+    with open('prompt_docs/gpt_responses1_test.txt') as f:
         responses = f.read()
     responses = responses.split('ID: ')
     # isolate ID

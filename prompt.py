@@ -16,7 +16,7 @@ if __name__ == '__main__':
     dev, test = train_test_split(test_dev, test_size=0.5, random_state=24)
     test['all'] = test['all'].map(ast.literal_eval)
 
-    with open('prompt_docs/prompt_e.txt', encoding='utf-8') as f:
+    with open('prompt_docs/prompt1.txt', encoding='utf-8') as f:
         prompt_part1 = f.read() + ' '
     prompt_part3 = """ ”
 What is the answer?"""
@@ -37,5 +37,5 @@ What is the answer?"""
         print(response)
 
         # save output to a file
-        with open('prompt_docs/gpt_responses_e_test.txt', 'a') as f:
+        with open('prompt_docs/gpt_responses1_test.txt', 'a') as f:
             f.write('ID: ' + str(doc_id) + '\n' + response + '\n')

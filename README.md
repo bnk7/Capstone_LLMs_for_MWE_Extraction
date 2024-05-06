@@ -20,3 +20,16 @@ $ pip install -r requirements.txt
 $ streamlit run app.py
 ```
 The application will open in your browser.
+
+## Code Description
+
+* `preprocess.py`: Builds the dataset by cleaning, saving, tokenizing, and splitting the data and formatting the labels.
+* `model.py`: Defines BERT and BERT-CRF models.
+* `train.py`: Trains and evaluates a model with the given configuration.
+* `utils.py`: Contains helper functions for pre- and post-processing.
+* `prompt.py`: Prompts GPT 3.5 Turbo and stores the responses. Requires OpenAI API key.
+* `postprocess.py`: Parses and evaluates the GPT responses.
+* `inference.py`: Evaluates saved models and ensemble systems based on saved models.
+* `process_new_data.py`: Predicts multiword expressions in unannotated data.
+* `tests.py`: Performs unit tests.
+* `app.py`: Builds a Streamlit application.
